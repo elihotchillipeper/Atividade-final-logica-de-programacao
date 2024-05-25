@@ -1,129 +1,62 @@
 #include <iostream>
+#include <vector>
 #include <string>
-#include <cstring>
-#include <algorithm>
-#include <climits>
+
 using namespace std;
 
-/*int main(){
-    int option;
+class Tarefa {
+public:
+	string Titulo;
+	string ID;
+    string Descricao;
+    string Vencimento;
+    int Status;
 
-    cout << "Sistema de Gerenciamento de Tarefas" <<endl;
-    cout << "1. Adicionar Tarefa" <<endl;
-    cout << "2. Visualizar Tarefas" <<endl;
-    cout << "3. Editar Tarefa" <<endl;
-    cout << "4. Remover Tarefa" <<endl;
-    cout << "5. Buscar Tarefa" <<endl;
-    cout << "6. Filtrar Tarefas por Status" <<endl;
-    cout << "0. Sair" <<endl;
-    cout << "Escolha uma opção: " <<endl;
+	Tarefa(string t, string i, string d, string v, int s) : Titulo(t), ID(i), 
+    Descricao(d), Vencimento(v), Status(s) {}
+};
 
-    cin >>  option;
-
-    //  0. SAIR
-    
-    if(option == 0){
-        cout << endl;
-    }
-
-
-    // GUARDAR INFORMAÇÕES
-
-    int ID[10];
-    string title[10];
-    string description[10];
-    string valid[10];
-    int stats[10];
-
-    int i = 0;
-
-    //  1. ADICIONAR TAREFAS
-
-    if(option == 1){
-        cout << "Adicionar Nova Tarefa" <<endl;
-        cout << "ID da Tarefa: " << endl;
-        cin >> ID[i] ;
-        cin.ignore();
-        cout << "Título: " <<endl;
-        getline(cin, title[i]);
-        cout << "Descrição: " <<endl;
-        getline(cin, description[i]);
-        cout << "Data de Vencimento: " <<endl;
-        getline(cin, valid[i]);
-        cout << "Status (1 - Pendente, 2 - Em Progresso, 3 - Concluída): " <<endl;
-        cin >> stats[i];
-        cout << "ID da Tarefa:" << ID[i] <<endl;
-        cout << "Título: " << title[i] <<endl;
-        cout << "Descrição: " << description[i] <<endl;
-        cout << "Data de Vencimento: " << valid[i] <<endl;
-        cout << "Status (1 - Pendente, 2 - Em Progresso, 3 - Concluída): " << stats[i] <<endl;
-        cout << "Tarefa adicionada com sucesso!" <<endl;
-        
-        i++;
-    }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-    return 0;
-}*/
- 
-void menuTarefas(){
-    int option;
-
-    cout << "Sistema de Gerenciamento de Tarefas" <<endl;
-    cout << "1. Adicionar Tarefa" <<endl;
-    cout << "2. Visualizar Tarefas" <<endl;
-    cout << "3. Editar Tarefa" <<endl;
-    cout << "4. Remover Tarefa" <<endl;
-    cout << "5. Buscar Tarefa" <<endl;
-    cout << "6. Filtrar Tarefas por Status" <<endl;
-    cout << "0. Sair" <<endl;
-    cout << "Escolha uma opção: " <<endl;
-
-    cin >>  option;
+//Adiciona tarefa; vector: estrutura de array porem aumenta e diminui automaticamente
+void addTarefa(vector<Tarefa>& tarefas, const string& Titulo, const string& ID, const string& Descricao, 
+    const string& Vencimento, int Status) {
+	tarefas.push_back(Tarefa(Titulo, ID, Descricao, Vencimento, Status));
 }
 
 
- void addTarefa(){
-    // GUARDAR INFORMAÇÕES
-
-    int i = 0;
-    int ID[i];
-    string title[i];
-    string description[i];
-    string valid[i];
-    int stats[i];
-
-    cout << "Adicionar Nova Tarefa" <<endl;
-        cout << "ID da Tarefa: " << endl;
-        cin >> ID[i] ;
-        cin.ignore();
-        cout << "Título: " <<endl;
-        getline(cin, title[i]);
-        cout << "Descrição: " <<endl;
-        getline(cin, description[i]);
-        cout << "Data de Vencimento: " <<endl;
-        getline(cin, valid[i]);
-        cout << "Status (1 - Pendente, 2 - Em Progresso, 3 - Concluída): " <<endl;
-        cin >> stats[i];
-        cout << "Tarefa adicionada com sucesso!" <<endl;
- }
+void mostrarTarefas(const vector<Tarefa>& tarefas) {
+	for (size_t i = 0; i < tarefas.size(); ++i) {
+    	cout << "Tarefa: " << tarefas[i].Titulo << ", ID: " << tarefas[i].ID << ", Descrição: " << tarefas[i].Descricao << 
+        ", Vencimento: " << tarefas[i].Vencimento << ", Status: " << tarefas[i].Status << endl;
+	}
+}
 
 
-void vizualizarTarefa(){
+void editTarefa(vector<Tarefa>& tarefas, const string& ID) {
+    for (auto& tarefa : tarefas) {
+        if (tarefa.ID == ID) {
+            cout << "Editar tarefa com o ID: " << ID << endl;
 
+            cout << "Digite o novo título: ";
+            string novoTitulo;
+            getline(cin, novoTitulo);
+
+            cout << "Digite a nova descrição: ";
+            string novaDescricao;
+            getline(cin, novaDescricao);
+
+            cout << "Digite o novo prazo: ";
+            string novoVencimento;
+            getline(cin, novoVencimento);
+
+            cout << "Novo status (1 - Pendente, 2 - Em Progresso, 3 - Concluída: ";
+            int novoStatus;
+            cin >> novoStatus;
+            cin.ignore();
+            cout << "Tarefa editada" << endl;
+            return;
+        }
+    }
+    cout << "Tarefa " << ID << " não encontrada." << endl;
 }
 
 
@@ -133,25 +66,53 @@ void vizualizarTarefa(){
 
 
 
+int main() {
+	vector<Tarefa> tarefas;
+	string Titulo;
+	string ID;
+    string Descricao;
+    string Vencimento;
+    int Status;
+	int escolha;
+
+	do {
+    	cout << "=== MENU ===" << endl;
+    	cout << "1. Adicionar tarefa" << endl;
+    	cout << "2. Visualizar tarefa" << endl;
+    	cout << "3. Editar tarefa" << endl;
+        cout << "4. Remover tarefa" << endl;
+    	cout << "5. Filtrar por status" << endl;
+        cout << "0. Sair" << endl;
+    	cout << "Escolha uma opção: ";
+    	cin >> escolha;
 
 
+        if(escolha == 1){
+            cout << "Título da tarefa: ";
+            cin.ignore();
+            getline(cin, Titulo);
+            cout << "ID da tarefa: ";
+            cin.ignore();
+            getline(cin, ID);
+            cout << "Descrição da tarefa: ";
+            cin.ignore();
+            getline(cin, Descricao);
+            cout << "Prazo de vencimento da tarefa: ";
+            cin.ignore();
+            getline(cin, Vencimento);
+            cout << "Status da tarefa (1 - Pendente, 2 - Em Progresso, 3 - Concluída): ";
+            cin >> Status;
 
+            addTarefa(tarefas,Titulo, ID, Descricao, Vencimento, Status);
+            
+        } else if(escolha == 2){
+            mostrarTarefas(tarefas);
+        } else if(escolha == 3){
+            cout << "Digite o ID da tarefa a ser editada: ";
+            getline(cin, ID);
+            editTarefa(tarefas, ID);
+        }
+    } while (escolha != 0);
 
-
-int main(){
-
-    int option;
-
-    menuTarefas();
-
-    if(option == 1){
-        addTarefa();
-    }
-    
-
- 
-
-
-
-    return 0;
+	return 0;
 }
