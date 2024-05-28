@@ -6,7 +6,7 @@
 using namespace std;
 
 class Tarefa {
-public:
+public:   
 	string Titulo;
 	string ID;
     string Descricao;
@@ -32,14 +32,14 @@ void mostrarTarefas(const vector<Tarefa>& tarefas) {
 }
 
 void editTarefa(vector<Tarefa>& tarefas, const string& ID) {
-    for (auto& tarefa : tarefas) {
+    for (auto& tarefa : tarefas) { // auto coloca atribui automaticamente uma int, string ou char para a variável
         if (tarefa.ID == ID) {
             cout << "Editar a tarefa com o ID: " << ID << endl;
 
             cout << "Digite o novo título: ";
             string novoTitulo;
             getline(cin, novoTitulo);
-            tarefa.Titulo = novoTitulo;
+            tarefa.Titulo = novoTitulo; // faz com que o título antigo sej asubstituído pelo título novo
 
             cout << "Digite a nova descrição: ";
             string novaDescricao;
@@ -73,28 +73,42 @@ void removerTarefa(vector<Tarefa>& tarefas, const string& ID){
     }
 
 void procuraTarefa(vector<Tarefa>& tarefas, const string& Titulo){
-    for (auto& tarefa : tarefas) {
+    bool encontrada = false;
+    for (const auto& tarefa : tarefas) {
     if (tarefa.Titulo == Titulo) {
-
+        encontrada = true;
+        cout << "Tarefas encontradas: " <<endl;
+        cout << "Título: " <<tarefa.Titulo <<endl;
+        cout << "ID: " <<tarefa.ID <<endl;
+        cout << "Descriçao: " <<tarefa.Descricao <<endl;
+        cout << "Vencimento: " <<tarefa.Vencimento <<endl;
+        cout << "Status: " <<tarefa.Status <<endl;
+        break;
+      } 
+    }
+        if(!encontrada){
+        cout << "Tarefa não encontrada." <<endl;
       }
     }
-}
-
-void filtraStatus(vector<Tarefa>& tarefas, int Status, int filtroStats){
-    if (filtr)
-            cout << "Tarefa encontrada: ";
-            cout << "Título: " << tarefas[Status].Titulo << ", ID: " << tarefas[Status].ID << ", Descrição: " << tarefas[Status].Descricao <<
-                ", Vencimento: " << tarefas[Status].Vencimento << ", Status: " << tarefas[Status].Status << endl;
-        }
 
 
-
-
-
-
-
-
-
+void filtraStatus(vector<Tarefa>& tarefas, int Status){
+    bool encontrada = false;
+    for (const auto& tarefa : tarefas) {
+    if (tarefa.Status == Status) {
+        encontrada = true;
+        cout << "Tarefas encontradas: " <<endl;
+        cout << "Título: " <<tarefa.Titulo <<endl;
+        cout << "ID: " <<tarefa.ID <<endl;
+        cout << "Descriçao: " <<tarefa.Descricao <<endl;
+        cout << "Vencimento: " <<tarefa.Vencimento <<endl;
+        cout << "Status: " <<tarefa.Status <<endl;
+      } 
+    }
+        if(!encontrada){
+        cout << "Tarefa não encontrada." <<endl;
+      }
+    }
 
 
 
@@ -121,6 +135,7 @@ int main() {
     	cout << "6. Filtrar por status" << endl;
         cout << "0. Sair" << endl;
     	cout << "Escolha uma opção: ";
+        cout <<endl;
     	cin >> escolha;
 
 
@@ -154,14 +169,12 @@ int main() {
         }else if(escolha == 5){
             cout << "Digite o nome da tarefa que procura: ";
             cin.ignore();
-            string Titulo;
-            //getline(cin, Titulo);
-            //procuraTarefa(tarefas, Titulo);
-        } else if(escolha == 6){
+            getline(cin, Titulo);
+            procuraTarefa(tarefas, Titulo);
+        }else if(escolha == 6){
             cout << "Digite o status que deseja filtrar: ";
-            int filtroStats;
-            cin >> filtroStats;
-            filtraStatus(tarefas, filtroStats);
+            cin >> Status;
+            filtraStatus(tarefas, Status);
         }
     } 
     while (escolha != 0);
