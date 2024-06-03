@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class Tarefa {
+class Tarefa { //"class" facilita o manuseio das tarefas em seu interior
 public:   
 	string Titulo;
 	string ID;
@@ -15,13 +15,13 @@ public:
 
 	Tarefa(string t, string i, string d, string v, int s) : Titulo(t), ID(i), 
     Descricao(d), Vencimento(v), Status(s) {}
-};
+}; //cria objeto tarefa e da valor
 
 
 void addTarefa(vector<Tarefa>& tarefas, const string& Titulo, const string& ID, const string& Descricao, 
     const string& Vencimento, int Status) {
 	tarefas.push_back(Tarefa(Titulo, ID, Descricao, Vencimento, Status));
-}
+} // adiciona uma nova tarefa, recebe os indicadores, cria um objeto tarefa, adiciona ao vetor tarefas
 
 
 void mostrarTarefas(const vector<Tarefa>& tarefas) {
@@ -29,7 +29,7 @@ void mostrarTarefas(const vector<Tarefa>& tarefas) {
     	cout << "Tarefa: " << tarefas[i].Titulo << ", ID: " << tarefas[i].ID << ", Descrição: " << tarefas[i].Descricao << 
         ", Vencimento: " << tarefas[i].Vencimento << ", Status: " << tarefas[i].Status << endl;
 	}
-}
+} // exibe todas as tarefas no vetor tarefas 
 
 void editTarefa(vector<Tarefa>& tarefas, const string& ID) {
     for (auto& tarefa : tarefas) { // auto coloca atribui automaticamente uma int, string ou char para a variável
@@ -61,7 +61,7 @@ void editTarefa(vector<Tarefa>& tarefas, const string& ID) {
         }
     }
     cout << "ID " << ID << " não encontrado." << endl;
-}
+} // edita a tarefa de acordo com o ID digitado
 
 void removerTarefa(vector<Tarefa>& tarefas, const string& ID){
     for (size_t i = 0; i < tarefas.size(); ++i) {
@@ -70,7 +70,7 @@ void removerTarefa(vector<Tarefa>& tarefas, const string& ID){
         	break;
     	}
 	}
-    }
+    } // remove tarefas com base no ID
 
 void procuraTarefa(vector<Tarefa>& tarefas, const string& Titulo){
     bool encontrada = false;
@@ -89,7 +89,7 @@ void procuraTarefa(vector<Tarefa>& tarefas, const string& Titulo){
         if(!encontrada){
         cout << "Tarefa não encontrada." <<endl;
       }
-    }
+    } // procura tarefa com base no título
 
 
 void filtraStatus(vector<Tarefa>& tarefas, int Status){
@@ -108,7 +108,7 @@ void filtraStatus(vector<Tarefa>& tarefas, int Status){
         if(!encontrada){
         cout << "Tarefa não encontrada." <<endl;
       }
-    }
+    } // procura tarefas pelo status
 
 
 
